@@ -24,7 +24,7 @@ class UserFixtures extends Fixture
     	$user = new User();
 
 	     $user->setEmail('shindax@mail.ru');
-	     $user->setRoles(['ADMIN']);
+	     $user->setRoles([]);
 	     $user->setPassword($this->passwordEncoder->encodePassword(
 	         $user,
 	         'vortex'

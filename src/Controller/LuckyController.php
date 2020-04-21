@@ -10,7 +10,18 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class LuckyController extends AbstractController
 {
   	/**
-      * @Route("/lucky/number")
+      * @Route("/", name="app_homepage")
+      */
+    public function index()
+    {
+        $number = random_int(0, 100);
+
+        return $this->render('base.html.twig', [
+            'number' => $number,]);
+    } 
+
+  	/**
+      * @Route("/lucky/number", name="lucky")
       */
     public function number()
     {
