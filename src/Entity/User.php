@@ -69,6 +69,8 @@ class User implements UserInterface
         // guarantee every user at least has ROLE_USER
         $roles[] = 'ROLE_USER';
 
+        dump($roles);
+
         return array_unique($roles);
     }
 

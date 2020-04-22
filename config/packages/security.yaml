@@ -5,8 +5,8 @@ security:
         algorithm: bcrypt
     firewalls:
         dev:
-            pattern: ^/(_(profiler|wdt)|css|images|js)/
-            security: false
+           pattern: ^/(_(profiler|wdt)|css|images|js)/
+           security: false
         main:
             anonymous: lazy
             guard:
@@ -15,7 +15,7 @@ security:
             logout:
                 path: app_logout
                 # where to redirect after logout
-                # target: app_any_route
+                target: app_homepage
 
     providers:
             users:
@@ -25,3 +25,5 @@ security:
 
     access_control:
         - { path: ^/login$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/admin, roles: ROLE_ADMIN }
+
