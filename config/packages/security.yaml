@@ -1,5 +1,9 @@
 # config/packages/security.yaml
 security:
+    role_hierarchy:
+        ROLE_USER1: ROLE_ADMIN
+        ROLE_USER2: ROLE_ADMIN
+
     encoders:
       App\Entity\User:
         algorithm: bcrypt
