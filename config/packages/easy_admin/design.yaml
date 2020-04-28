@@ -1,0 +1,10 @@
+easy_admin:
+    site_name: 'Test site'
+    design:
+        assets:
+            css:
+                - '/bundles/easyadmin/app.css'
+                - '/bundles/vendor/fontawesome/css/font-awesome.css'
+                - '/bundles/vendor/bootstrap/css/bootstrap.css'
+        menu:
+          - { label : Dashboard, route: admin_dashboard, default : true, icon : false  }

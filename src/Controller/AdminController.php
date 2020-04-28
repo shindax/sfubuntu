@@ -4,27 +4,17 @@ namespace App\Controller;
 
 use Symfony\Component\HttpFoundation\Response;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\EasyAdminController;
+use Symfony\Component\Routing\Annotation\Route;
 
 // src/Controller/AdminController.php
 class AdminController extends EasyAdminController
 {
-
-    public function __construct()
+     /**
+     * @Route("/dashboard", name="admin_dashboard")
+     */
+    public function dashboardAction()
     {
-    	// echo 123;
+        return $this->render('bundles/EasyAdminBundle/dashboard.html.twig');
     }
-
-     protected function listAction(){
-        $user = $this->getUser();
-
-        if( $user )
-          dump( $user -> getRoles() );
-
-         return parent::listAction();
-     }
-
-     protected function showAction(){
-     	return [];
-     }
 
 }

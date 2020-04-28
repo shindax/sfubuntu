@@ -1,0 +1,42 @@
+easy_admin:
+    design:
+        menu:
+          - { entity : User, label : Пользователи , permission : [ ROLE_ADMIN, ROLE_USER2 ]}
+    entities:
+        User:
+            class: App\Entity\User
+            label: 'Список пользователей'
+            icon: 'user'
+            list:
+                fields:
+                    - { property: 'name', label : 'Имя' }
+                    - { property: 'email',  label : 'email' }
+                    - { property: 'rcollection', label : 'Роли'}
+                    - { property: 'groups', label : 'Группы'}
+                actions:
+                    - { name: 'edit', label: 'Редактировать' }
+                    - { name: 'show', label: 'Смотреть' }
+                    
+
+            edit:
+                fields:
+                    - { property: 'name', label : 'Имя' }
+                    - { property: 'email',  label : 'email' }
+                    - { property: 'rcollection', label : 'Роли'}
+                    - { property: 'groups', label : 'Группы'}
+
+
+                    # - { type: 'divider' }
+                    # - { property: 'categories', type: 'easyadmin_autocomplete' }
+                    # - { type: 'group', css_class: 'col-sm-4', label: 'Product Details', icon: 'cube' }
+                    # - { property: 'ean', help: 'EAN-13 valid code. Leave empty if unknown.' }
+                    # - { property: 'price', type: 'number' }
+                    # - { type: 'section', label: 'Advanced Settings', icon: 'warning', help: 'Reserved for administrators use' }
+                    # - { property: 'enabled', label: 'Published' }
+                    # - { property: 'createdAt' }
+                    # - { type: 'group', css_class: 'col-sm-8 new-row' }
+                    # - { property: 'features' }
+                    # - { type: 'group', css_class: 'col-sm-4' }
+                    # - { property: 'tags' }
+                    # - { type: 'group', css_class: 'col-sm-4', label: 'Attachments', icon: 'paperclip' }
+                    # - { property: 'imageFile', type: 'vich_image', type_options: { required: true } }

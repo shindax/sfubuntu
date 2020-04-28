@@ -2,12 +2,28 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <title>
+        	{% block title %}Welcome 
+				{% if app.user.username is defined %}
+					{{ app.user.username }}
+				{% endif %}
+        	{% endblock %}
+    	</title>
         {% block stylesheets %}{% endblock %}
     </head>
     <body>
     <h1>Welcome!</h1>
-        {% block body %}{% endblock %}
+        {% block body %}
+
+		{% if is_granted('ROLE_ADMIN') or is_granted('ROLE_USER1') or is_granted('ROLE_USER2') %}
+    			<a href="/logout">logout</a>
+		{% else %}
+        	<a href="/login">login</a>
+		{% endif %}
+
+        &nbsp;&nbsp;&nbsp;<a href="/admin">admin</a>
+
+		{% endblock %}
         {% block javascripts %}{% endblock %}
     </body>
 </html>

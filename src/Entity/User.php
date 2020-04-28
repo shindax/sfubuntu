@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
@@ -23,11 +24,6 @@ class User implements UserInterface
     private $email;
 
     /**
-     * @ORM\Column(type="json")
-     */
-    private $roles = [];
-
-    /**
      * @var string The hashed password
      * @ORM\Column(type="string")
      */
@@ -38,9 +34,37 @@ class User implements UserInterface
      */
     private $name;
 
+
+    /**
+     * Many Users have Many roles.
+     *
+     * @var ArrayCollection
+     *
+     * @ORM\ManyToMany(targetEntity="Role", inversedBy="users")
+     * @ORM\JoinTable(name="users_roles")
+     */
+    private $rcollection;
+
+    /**
+     * Many Users have Many Groups.
+     *
+     * @var ArrayCollection
+     *
+     * @ORM\ManyToMany(targetEntity="Group", inversedBy="users")
+     * @ORM\JoinTable(name="users_groups")`
+     */
+    private $groups;
+
+
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function __construct()
+    {
+        $this->groups = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->roles = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     public function getEmail(): ?string
@@ -68,20 +92,17 @@ class User implements UserInterface
     /**
      * @see UserInterface
      */
-    public function getRoles(): array
+    public function getRoles()
     {
-        $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
-        return array_unique($roles);
+        $roles_arr = [];
+        $roles = $this->rcollection->getValues();
+
+        foreach ( $roles AS $value ) 
+            $roles_arr[] =  $value -> getName();
+
+        return array_unique( $roles_arr );
     }
 
-    public function setRoles(array $roles): self
-    {
-        $this->roles = $roles;
-
-        return $this;
-    }
 
     /**
      * @see UserInterface
@@ -123,13 +144,27 @@ class User implements UserInterface
     public function setName(string $name): self
     {
         $this->name = $name;
-
         return $this;
     }
 
     public function __toString(): ?string
     {
         return $this->name;
+    }
+
+    public function hasRoles()
+    {
+        return $this->roles;
+    }
+
+    public function getRcollection()
+    {
+        return $this->rcollection;
+    }
+
+    public function getGroups()
+    {
+        return $this->groups;
     }
 
 }
