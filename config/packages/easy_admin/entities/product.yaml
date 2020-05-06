@@ -1,7 +1,7 @@
 easy_admin:
     design:
         menu:
-          - { entity : Product, label : Товары , permission : ROLE_USER1 }
+          - { entity : Product, label : Товары , permission : [ ROLE_USER1 ]}
     entities:
         Product:
             # actions:
@@ -11,18 +11,18 @@ easy_admin:
 
             class: App\Entity\Product
             permissions:
-                # list:   ['ROLE_USER1']
-                # new:    ['ROLE_ADMIN']
-                # edit:   ['ROLE_ADMIN']
-                # delete: ['ROLE_USER2']
             label: 'Список товаров'
             icon: users
             list:
+                item_permission: [ ROLE_USER1 ]
                 fields:
                     - { property: 'name', label : 'Название', permission: 'ROLE_ADMIN'}
                     - { property: 'price',  label : 'Цена' }
                     - { property: 'category_id', label : '# категории' }
 
+                actions:
+                    - { name: 'edit', label: 'Редактировать' }
+                    - { name: 'show', label: 'Смотреть' }
+
             edit:
-                item_permission: ROLE_USER2
-                # permission: 'ROLE_USER2'
+                item_permission: [ ROLE_USER1 ]

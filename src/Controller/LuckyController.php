@@ -14,14 +14,11 @@ class LuckyController extends AbstractController
       */
     public function index( SecurityController $sec )
     {
-        $user = $this->getUser();
-        if( $user )
-          dump( $user -> getRoles() );
-
         $number = random_int(0, 100);
+        dump( $this->getUser() );
         return $this->render('base.html.twig', [
             'number' => $number,]);
-    } 
+    }
 
   	/**
       * @Route("/lucky/number", name="lucky")
