@@ -30,19 +30,26 @@ class EasyAdminExtension extends AbstractExtension
     {
         $canEdit = false;
         $canDelete = false;
+        $editPermission = null;
+        $deletePermission = null;
 
-        $editPermission = $itemActions['edit']['permission'];
-        $deletePermission = $itemActions['delete']['permission'];
+        if( isset( $itemActions['edit']['permission']) )
+            $editPermission = $itemActions['edit']['permission'];
 
-        foreach ($editPermission as $value) {
-            if( $this->authorizationChecker -> isGranted( $value ) )
-                $canEdit = true ;
-        }
+        if( isset( $itemActions['delete']['permission']) )
+            $deletePermission = $itemActions['delete']['permission'];
 
-        foreach ($deletePermission as $value) {
-            if( $this->authorizationChecker -> isGranted( $value ) )
-                $canDelete = true ;
-        }
+        if( $editPermission )
+            foreach ($editPermission as $value) {
+                if( $this->authorizationChecker -> isGranted( $value ) )
+                    $canEdit = true ;
+            }
+
+        if( $deletePermission )
+            foreach ($deletePermission as $value) {
+                if( $this->authorizationChecker -> isGranted( $value ) )
+                    $canDelete = true ;
+            }
 
         if( !$canEdit )
             unset( $itemActions['edit'] );

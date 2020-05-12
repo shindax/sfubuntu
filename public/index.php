@@ -1,5 +1,5 @@
 <?php
-$_SERVER['AUTH_USER'] = "admin@mail.ru";
+$_SERVER['AUTH_USER'] = "user2@mail.ru";
 
 use App\Kernel;
 use Symfony\Component\ErrorHandler\Debug;

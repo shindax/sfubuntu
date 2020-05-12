@@ -4,11 +4,6 @@ easy_admin:
           - { entity : Product, label : Товары , permission : [ ROLE_USER1 ]}
     entities:
         Product:
-            # actions:
-            # - { name: 'edit', icon: 'edit', label: false'}
-            # - { name: 'delete', icon: 'trash', label: false }
-            # - { name: 'show', icon: 'eye', label: false }
-
             class: App\Entity\Product
             permissions:
             label: 'Список товаров'

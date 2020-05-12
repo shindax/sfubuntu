@@ -1,12 +1,23 @@
 easy_admin:
     design:
         menu:
-          - { entity : Category, label : Категория , permission : ROLE_USER1 }
+          - { entity : Category, label : Категория , permission : [ ROLE_USER1 ]}
     entities:
         Category:
             class: App\Entity\Category
-            label: 'Список категорий'
+            permissions:
+            label: 'Список товаров'
+            icon: users
             list:
+                item_permission: [ ROLE_USER1 ]
                 fields:
-                    - { property: 'name', label : 'Название' }
+                    - { property: 'name', label : 'Название', permission: 'ROLE_ADMIN'}
+                    - { property: 'price',  label : 'Цена' }
+                    - { property: 'category_id', label : '# категории' }
 
+                actions:
+                    - { name: 'edit', label: 'Редактировать' }
+                    - { name: 'show', label: 'Смотреть' }
+
+            edit:
+                item_permission: [ ROLE_USER1 ]

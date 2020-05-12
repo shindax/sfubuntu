@@ -8,9 +8,6 @@ use EasyCorp\Bundle\EasyAdminBundle\Controller\EasyAdminController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
-use App\Service\Autologin;
-
-// src/Controller/AdminController.php
 class AdminController extends EasyAdminController
 {
 
@@ -21,9 +18,8 @@ class AdminController extends EasyAdminController
      * @Route("/dashboard", name="admin_dashboard")
      */
 
-    public function dashboardAction(Request $request)
+    public function dashboardAction()
     {
-        Autologin::autologin( $_SERVER['AUTH_USER'], $request, $this );
         return $this->render('bundles/EasyAdminBundle/dashboard.html.twig');
     }
 
@@ -39,7 +35,6 @@ class AdminController extends EasyAdminController
 
     public function indexAction(Request $request)
     {
-        Autologin::autologin( $_SERVER['AUTH_USER'], $request, $this );
     	$this->initialize($request);
         if (null === $request->query->get('entity')) {
             return $this->redirectToBackendHomepage();
@@ -69,6 +64,8 @@ class AdminController extends EasyAdminController
                 }
         }
 
+
+        dump( $userHasPermission );
         if( $userHasPermission )
     		$result = parent::indexAction($request);
     		else

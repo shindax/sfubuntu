@@ -7,19 +7,14 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Controller\SecurityController;
 
-use Symfony\Component\HttpFoundation\Request;
-use App\Service\Autologin;
-
 class MainController extends AbstractController
 {
   	/**
       * @Route("/", name="app_homepage")
       */
-    public function index( Request $request )
+    public function index()
     {
-        Autologin::autologin( $_SERVER['AUTH_USER'], $request, $this );
         $number = random_int(0, 100);
-        dump( $this->getUser() );
         return $this->render('base.html.twig', [
             'number' => $number,]);
     }

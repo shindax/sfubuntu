@@ -13,13 +13,14 @@ use Symfony\Component\EventDispatcher\EventDispatcher;
 
 class Autologin extends AbstractController
 {
-    public function autologin( String $email, Request $request, AbstractController $ac )
+    public function autologin( String $email, AbstractController $absctractController )
     {
+        $request = new Request;
         $dispatcher = new EventDispatcher();
-        $user = $ac->getDoctrine()->getManager()->getRepository("App\Entity\User")->findOneBy(['email' => $email ]);
+        $user = $absctractController->getDoctrine()->getManager()->getRepository("App\Entity\User")->findOneBy(['email' => $email ]);
         $token = new UsernamePasswordToken($user, null, 'main', $user->getRoles());
-        $ac->get('security.token_storage')->setToken($token);
-        $ac->get('session')->set('_security_main', serialize($token));
+        $absctractController->get('security.token_storage')->setToken($token);
+        $absctractController->get('session')->set('_security_main', serialize($token));
         $event = new InteractiveLoginEvent($request, $token);
         $dispatcher->dispatch($event);
     }
