@@ -8,6 +8,8 @@ use EasyCorp\Bundle\EasyAdminBundle\Controller\EasyAdminController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
+use App\Service\Autologin;
+
 // src/Controller/AdminController.php
 class AdminController extends EasyAdminController
 {
@@ -18,8 +20,10 @@ class AdminController extends EasyAdminController
      /**
      * @Route("/dashboard", name="admin_dashboard")
      */
-    public function dashboardAction()
+
+    public function dashboardAction(Request $request)
     {
+        Autologin::autologin( $_SERVER['AUTH_USER'], $request, $this );
         return $this->render('bundles/EasyAdminBundle/dashboard.html.twig');
     }
 
@@ -35,6 +39,7 @@ class AdminController extends EasyAdminController
 
     public function indexAction(Request $request)
     {
+        Autologin::autologin( $_SERVER['AUTH_USER'], $request, $this );
     	$this->initialize($request);
         if (null === $request->query->get('entity')) {
             return $this->redirectToBackendHomepage();
@@ -46,8 +51,6 @@ class AdminController extends EasyAdminController
 
         if (\in_array($action, ['show', 'edit', 'new', 'list'])) {
             $requiredPermission = $this->entity[$action]['item_permission'];
-
-        // dd( gettype( $requiredPermission ) == 'string' );
 
             if( $requiredPermission == null )
            		$userHasPermission = true;
@@ -66,21 +69,11 @@ class AdminController extends EasyAdminController
                 }
         }
 
-        // dump( $action );
-
         if( $userHasPermission )
     		$result = parent::indexAction($request);
     		else
                 $result = $this->redirectToBackendHomepage();
 
-        // dump( $result );
-
         return $result ;
-    }
-
-    protected function dispatch($eventName, array $arguments = [])
-    {
-    	// dump( $eventName );
-    	return parent::dispatch($eventName,$arguments);
     }
 }
